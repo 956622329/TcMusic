@@ -8,13 +8,18 @@ function formatCount(count) {
     return counter + ""
   }
 }
-function fomartDuration(duration) {
+function padLeftZero(time){
+time=time+""
+return ("00"+time).slice(time.length)
+}
+
+function fomatDuration(duration) {
   duration = duration / 1000
   var minute = Math.floor(duration / 60)
   var second = Math.floor(duration % 60)
-  return minute + ":" + second
+  return padLeftZero(minute) + ":" +padLeftZero(second)
 }
 module.exports = {
   formatCount: formatCount,
-  fomartDuration:fomartDuration
+  fomatDuration:fomatDuration
 }
