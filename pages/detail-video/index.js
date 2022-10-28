@@ -1,18 +1,32 @@
 // pages/detail-video/index.js
+import { getMvData, getMvUrl, getAllvideo } from "../../service/api_video"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    mvData: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options);
+    const _this = this
+    const id = options.id
+    //1.请求播放地址
+    getMvData(id).then(res => {
+      _this.setData({ mvData: res.data })
+    })
+    //2.请求视频信息
+    getMvUrl(id).then(res => {
+      console.log("url", res);
+    })
+    //3.请求相关视频
+    getAllvideo(id).then(res => {
+      console.log("all", res);
+    })
   },
 
   /**

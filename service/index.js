@@ -2,7 +2,7 @@ const BASE_URL = "http://123.207.32.32:9001"
 
 class TCRequest {
   request(url, method, params) {
-   return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       wx.request({
         url: BASE_URL + url,
         data: params,
@@ -13,12 +13,12 @@ class TCRequest {
       })
     })
   }
-  get(url,params){
-    return this.request(url,"GET",params)
+  get(url, params) {
+    return this.request(url, "GET", params)
   }
-  post(url,data){
-    return this.request(url,"POST",data)
+  post(url, data) {
+    return this.request(url, "POST", data)
   }
 }
-const tcRequest= new TCRequest()
+const tcRequest = new TCRequest()
 export default tcRequest
