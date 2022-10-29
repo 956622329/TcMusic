@@ -10,10 +10,9 @@ export function getMvData(mvid) {
     mvid
   })
 }
-export function getMvUrl(id, r = 1080) {
+export function getMvUrl(id) {
   return tcRequest.get("/mv/url", {
-    id,
-    r
+    id
   })
 }
 export function getAllvideo(id) {
