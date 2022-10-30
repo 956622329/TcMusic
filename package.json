@@ -1,0 +1,23 @@
+{
+  "name": "Music",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/956622329/TcMusic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/956622329/TcMusic/issues"
+  },
+  "homepage": "https://github.com/956622329/TcMusic#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.10.5"
+  }
+}

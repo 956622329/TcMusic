@@ -2,7 +2,8 @@
   "pages": [
     "pages/home-music/index",
     "pages/home-video/index",
-    "pages/detail-video/index"
+    "pages/detail-video/index",
+    "pages/detail-search/index"
   ],
   "tabBar": {
     "list": [
@@ -22,10 +23,9 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#fafafa",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json"
 }
