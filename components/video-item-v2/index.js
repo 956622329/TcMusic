@@ -6,7 +6,7 @@ Component({
   properties: {
     item: {
       type: Object,
-      defalt: {}
+      value: {}
     }
   },
 
