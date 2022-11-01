@@ -1,7 +1,7 @@
 // pages/home-music/index.js
 import { rankingStore } from "../../store/index"
 
-import { getBanner } from "../../service/api_music"
+import { getBanner, getSongMenu } from "../../service/api_music"
 import queryRect from "../../utils/query-rect"
 import throttle from "../../utils/throttle"
 
@@ -14,7 +14,10 @@ Page({
    */
   data: {
     banners: [],
-    swiperHeight: 0
+    swiperHeight: 0,
+    recommendSongs: [],
+    hotSongMenu: [],
+    recommendSongMenu: []
   },
 
   /**
@@ -25,11 +28,21 @@ Page({
     this.getPageData()
     //发起共享数据请求
     rankingStore.dispatch("getRankingDataAction")
+    //从store获取共享的数据
+    rankingStore.onState("hotRanking", res => {
+      if (!res.tracks) return
+      const recommendSongs = res.tracks.slice(0, 6)
+      this.setData({ recommendSongs })
+    })
   },
   //网络请求
   getPageData() {
     getBanner().then(res => {
       this.setData({ banners: res.banners })
+    })
+    getSongMenu().then(res => {
+      console.log(res);
+      this.setData({ hotSongMenu: res.playlists })
     })
   },
   //事件处理
