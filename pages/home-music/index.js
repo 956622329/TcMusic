@@ -1,7 +1,7 @@
 // pages/home-music/index.js
 import { rankingStore } from "../../store/index"
 
-import { getBanner, getSongMenu } from "../../service/api_music"
+import { getBanner, getSongMenu} from "../../service/api_music"
 import queryRect from "../../utils/query-rect"
 import throttle from "../../utils/throttle"
 
@@ -41,8 +41,10 @@ Page({
       this.setData({ banners: res.banners })
     })
     getSongMenu().then(res => {
-      console.log(res);
       this.setData({ hotSongMenu: res.playlists })
+    })
+    getSongMenu("华语").then(res => {
+      this.setData({ recommendSongMenu: res.playlists })
     })
   },
   //事件处理
