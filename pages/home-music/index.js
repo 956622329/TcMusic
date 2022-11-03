@@ -1,12 +1,12 @@
 // pages/home-music/index.js
 import { rankingStore } from "../../store/index"
 
-import { getBanner, getSongMenu} from "../../service/api_music"
+import { getBanner, getSongMenu } from "../../service/api_music"
 import queryRect from "../../utils/query-rect"
 import throttle from "../../utils/throttle"
 
 const throttleQueryRect = throttle(queryRect)
-
+const songsMap = { 0: "recommendSongs", 2: "newSongs", 3: "originSongs", 4: "upSongs" }
 Page({
 
   /**
@@ -15,9 +15,10 @@ Page({
   data: {
     banners: [],
     swiperHeight: 0,
-    recommendSongs: [],
     hotSongMenu: [],
-    recommendSongMenu: []
+    recommendSongMenu: [],
+
+    rankings: {}
   },
 
   /**
@@ -34,6 +35,9 @@ Page({
       const recommendSongs = res.tracks.slice(0, 6)
       this.setData({ recommendSongs })
     })
+    rankingStore.onState("newRanking", this.getRankingHandler(0))
+    rankingStore.onState("originRanking", this.getRankingHandler(1))
+    rankingStore.onState("upRanking", this.getRankingHandler(2))
   },
   //网络请求
   getPageData() {
@@ -63,6 +67,18 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+  },
+  getRankingHandler(idx) {
+    return (res) => {
+      if (Object.keys(res).length === 0) return
+      const name = res.name
+      const imgUrl = res.coverImgUrl
+      const playCount = res.playCount
+      const songList = res.tracks.slice(0, 3)
+      const rankingObj = { name, imgUrl, songList, playCount }
+      const newRankings = { ...this.data.rankings, [idx]: rankingObj }
+      this.setData({ rankings: newRankings })
+      console.log(this.data.rankings);
+    }
   }
 })
