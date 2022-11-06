@@ -1,2 +1,9 @@
 <!--components/ranking-area-item/index.wxml-->
-<view>{{item.name}}</view>
+
+<view class="item">
+  <view class="album">
+    <image class="image" src="item.imgUrl"></image>
+    <view class="play-counter">{{item.playCount}}</view>
+  </view>
+  <view>{{item.name}}</view>
+</view>
