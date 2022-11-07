@@ -1,12 +1,11 @@
 // pages/home-music/index.js
-import { rankingStore } from "../../store/index"
+import { rankingStore, rankingMap } from "../../store/index"
 
 import { getBanner, getSongMenu } from "../../service/api_music"
 import queryRect from "../../utils/query-rect"
 import throttle from "../../utils/throttle"
 
 const throttleQueryRect = throttle(queryRect)
-const songsMap = { 0: "recommendSongs", 2: "newSongs", 3: "originSongs", 4: "upSongs" }
 Page({
 
   /**
@@ -63,6 +62,19 @@ Page({
       this.setData({ swiperHeight: res[0].height })
     })
   },
+  handleMoreClick() {
+    this.navigateToDetailSongsPage("hotRanking")
+  },
+  handleRankingItemClick(event) {
+    const idx = event.currentTarget.dataset.idx;
+    const rankingName = rankingMap[idx]
+    this.navigateToDetailSongsPage(rankingName)
+  },
+  navigateToDetailSongsPage(rankingName) {
+    wx.navigateTo({
+      url: `/pages/detail-songs/index?ranking=${rankingName}`,
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
@@ -78,7 +90,7 @@ Page({
       const rankingObj = { name, imgUrl, songList, playCount }
       const newRankings = { ...this.data.rankings, [idx]: rankingObj }
       this.setData({ rankings: newRankings })
-      console.log(this.data.rankings);
+
     }
   }
 })
