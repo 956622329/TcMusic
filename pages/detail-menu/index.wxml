@@ -1,0 +1,12 @@
+<!--pages/detaill-menu/index.wxml-->
+<view class="menu">
+  <block wx:for="{{menu}}" wx:key="index">
+    <view class="title">{{item.cat}}</view>
+    <view class="menu-list">
+      <block wx:for="{{item.playlists}}" wx:key="index">
+        <song-menu-item class="menu-list-item" item="{{item}}" bindtap="handleMenuItemClick" data-id="{{item.id}}"></song-menu-item>
+      </block>
+    </view>
+
+  </block>
+</view>

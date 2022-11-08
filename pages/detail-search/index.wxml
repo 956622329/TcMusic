@@ -1,2 +1,23 @@
 <!--pages/detail-search/index.wxml-->
-<text>pages/detail-search/index.wxml</text>
+<van-search value="{{searchValue}}" background="#f7f7f7" shape="round" bind:change="handleSearchChange"></van-search>
+<!-- 热门搜索 -->
+<view class="hot" wx:if="{{!searchValue.length}}">
+  <area-header title="热门搜索" showRight="{{false}}">
+  </area-header>
+  <view class="list">
+    <block wx:for="{{hotKeyWord}}" wx:key="first">
+      <view class="tag">{{item.first}}</view>
+    </block>
+  </view>
+</view>
+<!-- 搜索建议 -->
+<view class="suggest" wx:elif="{{suggestSongs.length}}">
+  <view class="title">搜索"{{searchValue}}"</view>
+  <view class="item">
+    <block wx:for="{{suggestSongs}}" wx:key="keyword">
+      <image class="icon" src="/assets/images/icons/search_icon.png"></image>
+      <view class="text">{{item.keyword}}</view>
+    </block>
+  </view>
+</view>
+<!-- 搜索结果 -->

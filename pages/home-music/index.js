@@ -72,7 +72,7 @@ Page({
   },
   navigateToDetailSongsPage(rankingName) {
     wx.navigateTo({
-      url: `/pages/detail-songs/index?ranking=${rankingName}`,
+      url: `/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
     })
   },
   /**
@@ -90,7 +90,6 @@ Page({
       const rankingObj = { name, imgUrl, songList, playCount }
       const newRankings = { ...this.data.rankings, [idx]: rankingObj }
       this.setData({ rankings: newRankings })
-
     }
   }
 })

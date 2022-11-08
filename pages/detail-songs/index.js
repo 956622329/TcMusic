@@ -1,19 +1,34 @@
 // pages/detail-songs/index.js
 import { rankingStore } from "../../store/index"
+import { getRankings } from "../../service/api_music"
 Page({
   data: {
     ranking: "",
-    rankingInfo: {}
+    songInfo: {},
+    type: ""
   },
   onLoad(options) {
-    const ranking = options.ranking
-    rankingStore.onState(ranking, this.getRankingDataHandler)
+    const type = options.type
+    this.setData({ type })
+    if (type === 'menu') {
+      const id = options.id
+      getRankings(id).then(res => {
+        this.setData({ songInfo: res.playlist })
+      })
+    }
+    else if (type === 'rank') {
+      const ranking = options.ranking
+      this.setData({ ranking })
+      rankingStore.onState(ranking, this.getRankingDataHandler)
+    }
+
   },
   onUnload() {
-    rankingStore.offState(this.data.ranking, this.getRankingDataHandler)
+    if (this.data.ranking) {
+      rankingStore.offState(this.data.ranking, this.getRankingDataHandler)
+    }
   },
   getRankingDataHandler(res) {
-    this.setData({ rankingInfo: res })
-    console.log(this.data.rankingInfo);
+    this.setData({ songInfo: res })
   }
 })
