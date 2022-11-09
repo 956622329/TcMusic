@@ -8,3 +8,8 @@ export function getSearchSuggest(keywords, type = 'mobile') {
     type
   })
 }
+export function getSearchResult(keywords) {
+  return tcRequest.get("/search", {
+    keywords
+  })
+}
