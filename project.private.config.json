@@ -10,9 +10,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "searchdetail",
-          "pathName": "pages/detail-search/index",
-          "query": "",
+          "name": "player",
+          "pathName": "pages/music-player/index",
+          "query": "id=1481392469",
           "launchMode": "default",
           "scene": null
         }

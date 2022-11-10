@@ -5,7 +5,8 @@
     "pages/detail-video/index",
     "pages/detail-search/index",
     "pages/detail-songs/index",
-    "pages/detail-menu/index"
+    "pages/detail-menu/index",
+    "pages/music-player/index"
   ],
   "tabBar": {
     "list": [

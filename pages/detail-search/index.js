@@ -35,15 +35,17 @@ Page({
     this.setData({ searchValue })
     //判断关键字为空字符的处理逻辑
     if (!searchValue.length) {
-      this.setData(({ suggestSongs: [] }))
-      this.setData({ resultSongs: [] })
+      this.setData(({ suggestSongs: [], resultSongs: [] }))
+      debounceGetSearchSuggeest.cancel()
       return
     }
     //根据关键字进行搜索
     debounceGetSearchSuggeest(searchValue).then(res => {
-      if (!res.result.allMatch) return
+      // 获取建议的关键字歌曲
       const suggestSongs = res.result.allMatch
       this.setData({ suggestSongs })
+      if (!suggestSongs) return
+      // 转成nodes节点
       const suggestKeywords = suggestSongs.map(item => item.keyword)
       const suggestSongsNodes = []
       for (const keyword of suggestKeywords) {

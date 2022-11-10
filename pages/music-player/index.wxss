@@ -1,0 +1,29 @@
+/* pages/music-player/index.wxss */
+.bg-image,
+.bg-cover {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.bg-cover {
+  background-color: rgb(0, 0, 0, .5);
+  backdrop-filter: blur(20px);
+}
+
+.tab {
+  display: flex;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.tab .divider {
+  margin: 0 10rpx;
+}
+
+.tab .active {
+  color: #fff;
+}
