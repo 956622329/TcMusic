@@ -6,7 +6,7 @@
       <view class="left-slot">
         <slot name="left"></slot>
       </view>
-      <view class="left-arrow">
+      <view class="left-arrow" bindtap="handleArrowClick">
         <image class="icon" mode="widthFix" src="../../assets/images/icons/arrow-left.png"></image>
       </view>
     </view>

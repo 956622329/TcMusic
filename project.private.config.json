@@ -15,6 +15,13 @@
           "query": "id=1481392469",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/home-music/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

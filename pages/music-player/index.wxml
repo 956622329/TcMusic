@@ -1,4 +1,5 @@
 <!--pages/music-player/index.wxml-->
+<wxs src="../../utils/format.wxs" module="format"></wxs>
 <!-- 背景 -->
 <image class="bg-image" src="{{currentSong.al.picUrl}}"></image>
 <view class="bg-cover"></view>
@@ -11,7 +12,34 @@
   </view>
 </nav-bar>
 <!-- 内容 -->
-<swiper class="content" style="height: {{contentHeight}}px;">
-  <swiper-item>1</swiper-item>
-  <swiper-item>2</swiper-item>
+<swiper class="content" style="height: {{contentHeight}}px;" bindchange="handleSiperChange">
+  <swiper-item class="music">
+    <view class="album">
+      <image class="image" mode="aspectFill" src="{{currentSong.al.picUrl}}"></image>
+    </view>
+    <view class="info">
+      <view class="title">{{currentSong.name}}</view>
+      <view class="subtitle">
+        <view class="singer">{{currentSong.ar[0].name}}</view>
+        <view class="alias">专辑: {{currentSong.alia[0]}}</view>
+      </view>
+    </view>
+    <view class="lyric" wx:if="{{isMusicLyric}}">歌词</view>
+    <view class="progress">
+      <slider class="slider" block-size="{{12}}" value="{{sliderValue}}" bindchanging="handleSliderChanging" bindchange="handleSliderChange">
+      </slider>
+      <view class="time">
+        <view class="current">{{format.formatDuration(currentTime)}}</view>
+        <view class="duration">{{format.formatDuration(durationTime)}}</view>
+      </view>
+    </view>
+    <view class="operation">
+      <image class="btn btn-mode" src="../../assets/images/player/play_random.png" bindtap="handleModeBtnClick"></image>
+      <image class="btn btn-prev" src="../../assets/images/player/play_prev.png" bindtap="handlePrevBtnClick"></image>
+      <image class="btn btn-pause" src="../../assets/images/player/play_resume.png" bindtap="handlePlayBtnClick"></image>
+      <image class="btn btn-next" src="../../assets/images/player/play_next.png" bindtap="handleNextBtnClick"></image>
+      <image class="btn btn-music" src="../../assets/images/player/play_music.png"></image>
+    </view>
+  </swiper-item>
+  <swiper-item class="lyric">2</swiper-item>
 </swiper>
