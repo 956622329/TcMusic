@@ -1,5 +1,6 @@
 // pages/music-player/index.js
 import { getSongDetail, getSongUrl } from "../../service/api_player"
+import { audioContext } from '../../store/index'
 Page({
   data: {
     id: 0,
@@ -7,9 +8,11 @@ Page({
     isMusicLyric: true,
     currentPage: 0,
     contentHeight: 0,
-    songUrl: '',
     durationTime: 0,
-    audioContext: null
+    currentTime: 0,
+    sliderValue: 0,
+    player: false,
+    isSliderChanging: false
   },
 
   onLoad(options) {
@@ -22,16 +25,18 @@ Page({
     const deviceRadio = globalData.deviceRadio
     this.setData({ contentHeight, isMusicLyric: deviceRadio >= 2 })
     // 创建播放器
-    getSongUrl(id).then(res => {
-      const audioContext = wx.createInnerAudioContext({
-        useWebAudioImplement: false // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
-      })
-      this.setData({ songUrl: res.data[0].url, audioContext })
-      // audioContext.src = res.data[0].url
-      audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-      // audioContext.play()
-      // audioContext.pause()
-      // audioContext.stop()
+    audioContext.stop()
+    audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+    audioContext.autoplay = true
+    audioContext.onCanplay(() => {
+      audioContext.play()
+    })
+    audioContext.onTimeUpdate(() => {
+      const currentTime = audioContext.currentTime * 1000
+      if (!this.data.isSliderChanging) {
+        const sliderValue = currentTime / this.data.durationTime * 100
+        this.setData({ currentTime, sliderValue })
+      }
     })
   },
   // 网络请求
@@ -47,7 +52,29 @@ Page({
     this.setData({ currentPage })
   },
   handlePlayBtnClick() {
-    this.data.audioContext.play()
+    if (!this.data.player) {
+      audioContext.play()
+      this.setData({ player: true })
+    }
+    else {
+      audioContext.pause()
+      this.setData({ player: false })
+    }
+  },
+  handleSliderChange(event) {
+    // 获取slider变化的值
+    const value = event.detail.value
+    // 计算currentTime值
+    const currentTime = value / 100000 * this.data.durationTime
+    // 设置时间
+    audioContext.pause()
+    audioContext.seek(currentTime)
+    this.setData({ currentTime: currentTime * 1000, isSliderChanging: false })
+  },
+  handleSliderChanging(event) {
+    const value = event.detail.value
+    const currentTime = value / 100 * this.data.durationTime
+    this.setData({ currentTime, isSliderChanging: true })
   },
   onUnload() {
 

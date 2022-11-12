@@ -10,16 +10,16 @@
     "miniprogram": {
       "list": [
         {
-          "name": "player",
-          "pathName": "pages/music-player/index",
-          "query": "id=1481392469",
+          "name": "",
+          "pathName": "pages/home-music/index",
+          "query": "",
           "launchMode": "default",
           "scene": null
         },
         {
           "name": "",
-          "pathName": "pages/home-music/index",
-          "query": "",
+          "pathName": "pages/music-player/index",
+          "query": "id=1392908905",
           "launchMode": "default",
           "scene": null
         }
