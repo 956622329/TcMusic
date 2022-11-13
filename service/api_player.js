@@ -4,9 +4,8 @@ export function getSongDetail(ids) {
     ids
   })
 }
-export function getSongUrl(id, level = "exhigh") {
-  return tcRequest.get("/song/url/v1", {
-    id,
-    level
+export function getSongLyric(id) {
+  return tcRequest.get("/lyric", {
+    id
   })
 }
