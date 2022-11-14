@@ -12,7 +12,7 @@ const rankingStore = new HYEventStore({
   },
   actions: {
     getRankingDataAction(ctx) {
-      getRankings(24381616).then(res => {
+      getRankings(6698809494).then(res => {
         ctx.hotRanking = res.playlist
       })
       getRankings(2302705693).then(res => {

@@ -16,7 +16,7 @@ Page({
     swiperHeight: 0,
     hotSongMenu: [],
     recommendSongMenu: [],
-
+    recommendSongs: [],
     rankings: {}
   },
 

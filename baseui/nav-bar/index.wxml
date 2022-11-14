@@ -2,11 +2,11 @@
 <view class="nav">
   <view style="height:{{statusBarHeight}}px"></view>
   <view class="nav-bar" style="height: {{NavBarHeight}}px;">
-    <view class="left">
+    <view class="left" bindtap="handleLeftClick">
       <view class="left-slot">
         <slot name="left"></slot>
       </view>
-      <view class="left-arrow" bindtap="handleArrowClick">
+      <view class="left-arrow" >
         <image class="icon" mode="widthFix" src="../../assets/images/icons/arrow-left.png"></image>
       </view>
     </view>

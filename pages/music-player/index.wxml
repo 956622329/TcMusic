@@ -4,7 +4,7 @@
 <image class="bg-image" src="{{currentSong.al.picUrl}}"></image>
 <view class="bg-cover"></view>
 <!-- 导航 -->
-<nav-bar>
+<nav-bar bind:click="handlieBackBtnClick">
   <view slot="title" class="tab">
     <view class="{{currentPage===0?'active':''}}">歌曲</view>
     <view class="divider">|</view>
@@ -34,9 +34,9 @@
       </view>
     </view>
     <view class="operation">
-      <image class="btn btn-mode" src="../../assets/images/player/play_random.png" bindtap="handleModeBtnClick"></image>
+      <image class="btn btn-mode" src="../../assets/images/player/play_{{playModeName}}.png" bindtap="handleModeBtnClick"></image>
       <image class="btn btn-prev" src="../../assets/images/player/play_prev.png" bindtap="handlePrevBtnClick"></image>
-      <image class="btn btn-pause" src="../../assets/images/player/play_resume.png" bindtap="handlePlayBtnClick"></image>
+      <image class="btn btn-pause" src="../../assets/images/player/play_{{playingName}}.png" bindtap="handlePlayBtnClick"></image>
       <image class="btn btn-next" src="../../assets/images/player/play_next.png" bindtap="handleNextBtnClick"></image>
       <image class="btn btn-music" src="../../assets/images/player/play_music.png"></image>
     </view>

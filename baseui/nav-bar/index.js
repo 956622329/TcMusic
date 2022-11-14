@@ -15,10 +15,8 @@ Component({
     NavBarHeight: getApp().globalData.NavBarHeight
   },
   methods: {
-    handleArrowClick() {
-      wx.navigateBack({
-        delta: 1,
-      })
+    handleLeftClick() {
+      this.triggerEvent('click')
     }
   }
 })
