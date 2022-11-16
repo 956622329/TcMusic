@@ -15,6 +15,8 @@ Page({
     playModeName: "order",
     isPlaying: false,
     playingName: "resume",
+    playSongList: [],
+    playSongIndex: 0,
 
     isMusicLyric: true,
     isSliderChanging: false,
@@ -36,7 +38,6 @@ Page({
     this.setData({ contentHeight, isMusicLyric: deviceRadio >= 2 })
 
     // 事件监听
-    this.setData({ player: true })
   },
   //============================= 事件处理 ==============================
   handleSiperChange(event) {
@@ -70,13 +71,13 @@ Page({
     playerStore.setState("playModeIndex", playModeIndex)
   },
   handlePlayBtnClick() {
-    playerStore.dispatch("changeMusicPlayStatus")
+    playerStore.dispatch("changeMusicPlayStatus", !this.data.isPlaying)
   },
   handlePrevBtnClick() {
-
+    playerStore.dispatch("changeNewMusicAction", false)
   },
   handleNextBtnClick() {
-
+    playerStore.dispatch("changeNewMusicAction")
   },
   // ============================= 数据监听 =======================
   setupPlayerStoreListener() {
@@ -104,15 +105,19 @@ Page({
       if (currentLyricText) this.setData({ currentLyricText })
     })
     // 3.监听播放模式相关的数据
-    playerStore.onStates(["isPlaying", "playModeIndex"], ({ isPlaying, playModeIndex }) => {
+    playerStore.onStates(["isPlaying", "playModeIndex", "playSongList", "playSongIndex"], ({ isPlaying, playModeIndex, playSongList, playSongIndex }) => {
       if (playModeIndex !== undefined) {
         this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
       }
       if (isPlaying !== undefined) {
-        // audioContext.play()
         this.setData({ isPlaying, playingName: isPlaying ? "pause" : "resume" })
       }
-
+      if (playSongList) {
+        this.setData({ playSongList })
+      }
+      if (playSongIndex !== undefined) {
+        this.setData({ playSongIndex })
+      }
     })
   },
   onUnload() {

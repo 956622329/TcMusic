@@ -3,8 +3,9 @@
   "projectname": "Music",
   "setting": {
     "compileHotReLoad": false,
-    "urlCheck": false
+    "urlCheck": false,
+    "bigPackageSizeSupport": true
   },
-  "libVersion": "2.25.4",
+  "libVersion": "2.27.1",
   "condition": {}
 }

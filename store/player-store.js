@@ -6,6 +6,7 @@ const audioContext = wx.createInnerAudioContext()
 
 const playerStore = new HYEventStore({
   state: {
+    isFirstPlay: true,
     id: 0,
     currentSong: {},
     durationTime: 0,
@@ -16,11 +17,24 @@ const playerStore = new HYEventStore({
     currentLyricIndex: 0,
 
     isPlaying: false,
-    playModeIndex: 0
+    playModeIndex: 0,
+    playSongList: [],
+    playSongIndex: 0,
+
   },
   actions: {
-    playMusicWithSongIdAction(ctx, { id }) {
+    playMusicWithSongIdAction(ctx, { id, isRefresh = false }) {
+      if (id == ctx.id && !isRefresh) return
       ctx.id = id
+      // 
+      // 修改播放状态
+      ctx.isPlaying = true
+      ctx.currentSong = {}
+      ctx.durationTime = 0
+      ctx.lyricInfos = []
+      ctx.currentTime = 0
+      ctx.currentLyricText = ""
+      ctx.currentLyricIndex = 0
       // 请求歌曲详情和歌词数据
       getSongDetail(id).then(res => {
         ctx.currentSong = res.songs[0]
@@ -32,22 +46,28 @@ const playerStore = new HYEventStore({
       })
       // 播放歌曲
       // 
-      audioContext.stop()
+      // audioContext.stop()
       audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-      audioContext.autoplay = true
-      ctx.isPlaying = true
-
+      audioContext.autoplay = false
       // 监听audioContext的一些事件
-      this.dispatch("setupAudioContextListenerAction")
+      if (ctx.isFirstPlay) {
+        this.dispatch("setupAudioContextListenerAction")
+        ctx.isFirstPlay = false
+      }
     },
     setupAudioContextListenerAction(ctx) {
       // 监听歌曲可以播放
       audioContext.onCanplay(() => {
         audioContext.play()
+        let duration = audioContext.duration
+      })
+      audioContext.onPlay(() => {
+        let duration = audioContext.duration
       })
       //监听时间改变
       audioContext.onTimeUpdate(() => {
         // 获取当前时间
+        console.log("监听");
         const currentTime = audioContext.currentTime * 1000
         if (!ctx.lyricInfos.length) return
         // 根据当前时间修改currentTime
@@ -70,12 +90,44 @@ const playerStore = new HYEventStore({
           }
         }
       })
+      audioContext.onEnded(() => {
+        if (ctx.playModeIndex == 1) {
+          this.dispatch("playMusicWithSongIdAction", { id: ctx.id, isRefresh: true })
+        }
+        else {
+          this.dispatch("changeNewMusicAction")
+        }
+      })
     },
-    changeMusicPlayStatus(ctx) {
-      ctx.isPlaying = !ctx.isPlaying
+    changeMusicPlayStatus(ctx, isPlaying = true) {
+      ctx.isPlaying = isPlaying
       ctx.isPlaying ? audioContext.play() : audioContext.pause()
+    },
+    changeNewMusicAction(ctx, isNext = true) {
+      let index = ctx.playSongIndex
+      const list = ctx.playSongList
+      switch (ctx.playModeIndex) {
+        case 0:
+          if (!isNext) {
+            index = index - 1
+            if (index == -1) index = list.length - 1
+            break
+          }
+          else {
+            index = index + 1
+            if (index == list.length) index = 0
+          }
+        case 1:
+          break
+        case 2:
+          index = Math.floor(Math.random() * list.length)
+          console.log(index);
+          break
+      }
+      const id = list[index].id
+      ctx.playSongIndex = index
+      this.dispatch("playMusicWithSongIdAction", { id })
     }
-
   }
 })
 

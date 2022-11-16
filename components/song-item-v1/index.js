@@ -8,6 +8,14 @@ Component({
     item: {
       type: Object,
       value: {}
+    },
+    playSongList: {
+      type: Array,
+      value: []
+    },
+    playSongIndex: {
+      type: Number,
+      value: 0
     }
   },
 
@@ -30,6 +38,8 @@ Component({
       })
       // 歌曲信息请求
       playerStore.dispatch("playMusicWithSongIdAction", { id })
+      playerStore.setState("playSongList", this.properties.playSongList)
+      playerStore.setState("playSongIndex", this.properties.playSongIndex)
     }
   }
 })
