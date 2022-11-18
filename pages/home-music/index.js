@@ -88,8 +88,13 @@ Page({
       this.setData({ rankings: newRankings })
     }
   },
+  handleSongItemClick: function (event) {
+    const index = event.currentTarget.dataset.index
+    playerStore.setState("playListSongs", this.data.recommendSongs)
+    playerStore.setState("playListIndex", index)
+  },
   handlePlayBtnClick() {
-    playerStore.dispatch("changeMusicPlayStatus", !this.data.isPlaying)
+    playerStore.dispatch("changeMusicPlayStatusAction", !this.data.isPlaying)
   },
   handlePlayBarClick() {
     wx.navigateTo({

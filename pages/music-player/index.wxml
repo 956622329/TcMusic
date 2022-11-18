@@ -12,7 +12,7 @@
   </view>
 </nav-bar>
 <!-- 内容 -->
-<swiper class="content" style="height: {{contentHeight}}px;" bindchange="handleSiperChange">
+<swiper class="content" style="height: {{contentHeight}}px;" bindchange="handleSwiperChange">
   <swiper-item class="music">
     <view class="album">
       <image class="image" mode="aspectFill" src="{{currentSong.al.picUrl}}"></image>

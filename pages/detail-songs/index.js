@@ -10,6 +10,7 @@ Page({
   onLoad(options) {
     const type = options.type
     this.setData({ type })
+
     if (type === 'menu') {
       const id = options.id
       getRankings(id).then(res => {
@@ -21,7 +22,11 @@ Page({
       this.setData({ ranking })
       rankingStore.onState(ranking, this.getRankingDataHandler)
     }
-
+  },
+  handleSongItemClick: function (event) {
+    const index = event.currentTarget.dataset.index
+    playerStore.setState("playListSongs", this.data.songInfo.tracks)
+    playerStore.setState("playListIndex", index)
   },
   onUnload() {
     if (this.data.ranking) {
