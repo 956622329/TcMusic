@@ -1,5 +1,5 @@
 // pages/detail-video/index.js
-import { getMvData, getMvUrl, getAllvideo } from "../../service/api_video"
+import { getMvData, getMvUrl, getAllvideo } from "../../../service/api_video"
 Page({
 
   /**

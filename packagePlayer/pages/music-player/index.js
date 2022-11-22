@@ -1,5 +1,5 @@
 // pages/music-player/index.js
-import { audioContext, playerStore } from '../../store/index'
+import { audioContext, playerStore } from '../../../store/index'
 const playModeNames = ["order", "repeat", "random"]
 Page({
   data: {
@@ -131,5 +131,4 @@ Page({
   onUnload() {
 
   }
-
 })

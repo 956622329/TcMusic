@@ -1,6 +1,6 @@
 // pages/detail-songs/index.js
-import { rankingStore } from "../../store/index"
-import { getRankings } from "../../service/api_music"
+import { rankingStore } from "../../../store/index"
+import { getRankings } from "../../../service/api_music"
 Page({
   data: {
     ranking: "",

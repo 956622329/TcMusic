@@ -1,5 +1,5 @@
 <!--pages/music-player/index.wxml-->
-<wxs src="../../utils/format.wxs" module="format"></wxs>
+<wxs src="../../../utils/format.wxs" module="format"></wxs>
 <!-- 背景 -->
 <image class="bg-image" src="{{currentSong.al.picUrl}}"></image>
 <view class="bg-cover"></view>

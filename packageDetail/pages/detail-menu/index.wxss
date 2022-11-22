@@ -1,4 +1,4 @@
-/* pages/detaill-menu/index.wxss */
+/* pages/detail-menu/index.wxss */
 .menu .title {
   margin-top: 20rpx;
   margin-left: 20rpx;

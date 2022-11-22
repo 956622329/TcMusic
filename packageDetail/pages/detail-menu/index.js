@@ -1,5 +1,5 @@
-// pages/detaill-menu/index.js
-import { getSongMenu } from "../../service/api_music"
+// pages/detail-menu/index.js
+import { getSongMenu } from "../../../service/api_music"
 Page({
   data: {
     menu: []
@@ -20,7 +20,7 @@ Page({
   handleMenuItemClick(event) {
     const id = event.currentTarget.dataset.id
     wx.navigateTo({
-      url: `/pages/detail-songs/index?id=${id}&type=menu`,
+      url: `/packageDetail/pages/detail-songs/index?id=${id}&type=menu`,
     })
   }
 })

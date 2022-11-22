@@ -1,4 +1,4 @@
-<!--pages/detaill-menu/index.wxml-->
+<!--pages/detail-menu/index.wxml-->
 <view class="menu">
   <block wx:for="{{menu}}" wx:key="index">
     <view class="title">{{item.cat}}</view>

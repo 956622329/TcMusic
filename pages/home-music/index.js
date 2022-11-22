@@ -31,7 +31,6 @@ Page({
   onLoad(options) {
     //获取页面数据
     this.getPageData()
-
     this.setupPlayerStoreListener()
   },
   //网络请求
@@ -49,7 +48,7 @@ Page({
   //事件处理
   handleSearchClick() {
     wx.navigateTo({
-      url: '/pages/detail-search/index',
+      url: '/packageDetail/pages/detail-search/index',
     })
   },
   handleSwiperImageLoaded() {
@@ -68,7 +67,7 @@ Page({
   },
   navigateToDetailSongsPage(rankingName) {
     wx.navigateTo({
-      url: `/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
+      url: `/packageDetail/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
     })
   },
   /**
@@ -98,7 +97,7 @@ Page({
   },
   handlePlayBarClick() {
     wx.navigateTo({
-      url: '/pages/music-player/index?id=' + this.data.currentSong.id,
+      url: '/packagePlayer/pages/music-player/index?id=' + this.data.currentSong.id,
     })
   },
   // ============================= 数据监听 =======================

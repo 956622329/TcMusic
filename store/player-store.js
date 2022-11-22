@@ -140,14 +140,13 @@ const playerStore = new HYEventStore({
     },
     changeMusicPlayStatusAction(ctx, isPlaying = true) {
       ctx.isPlaying = isPlaying
-      if (ctx.isPlaying) {
-        audioContext.play()
-        // this.dispatch("setupAudioContextListenerAction")
+      if (ctx.isPlaying && ctx.isStoping) {
+        audioContext.src = `https://music.163.com/song/media/outer/url?id=${ctx.id}.mp3`
+        audioContext.title = ctx.currentSong.name
+        audioContext.startTime(ctx.currentTime / 1000)
+        ctx.isStoping = false
       }
-      else {
-        audioContext.pause()
-        // this.dispatch("cancelAudioContextListener")
-      }
+      ctx.isPlaying ? audioContext.play() : audioContext.pause()
     },
     changeNewMusicAction(ctx, isNext = true) {
       let index = ctx.playSongIndex
