@@ -2,16 +2,16 @@
 <wxs src="../../../utils/format.wxs" module="format"></wxs>
 <video class="video" autoplay src="{{mvUrl.url}}"></video>
 <view class="info">
-  <view class="title">{{ mvInfo.name }}</view>
-  <view class="desc">{{ mvInfo.artistName }} - {{ mvInfo.alias[0] }}</view>
+  <view class="title">{{ mvInfo.name||mvInfo.title }}</view>
+  <view class="desc">{{ mvInfo.artistName||mvInfo.creator.nickname }} - {{ mvInfo.alias[0]||mvInfo.description }}</view>
   <view class="other">
-    <text class="play-count">{{format.formatCount(mvInfo.playCount)}}次播放 - </text>
+    <text class="play-count">{{format.formatCount(mvInfo.playCount||mvInfo.playTime)}}次播放 - </text>
     <text class="publish-time">{{mvInfo.publishTime}}</text>
   </view>
 </view>
 <view class="allvideo">
   <view class="title">推荐视频</view>
   <view class="item" wx:for="{{allVideo}}" wx:key="vid">
-    <video-item-v2 item="{{item}}"></video-item-v2>
+    <video-item-v2 item="{{item}}" bindtap="handleVideoItemClick" data-item="{{item}}"></video-item-v2>
   </view>
 </view>

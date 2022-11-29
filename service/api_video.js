@@ -15,6 +15,16 @@ export function getMvUrl(id) {
     id
   })
 }
+export function getVideoData(id) {
+  return tcRequest.get("/video/detail", {
+    id
+  })
+}
+export function getVideoUrl(id) {
+  return tcRequest.get("/video/url", {
+    id
+  })
+}
 export function getAllvideo(id) {
   return tcRequest.get("/related/allvideo", {
     id

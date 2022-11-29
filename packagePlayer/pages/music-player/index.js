@@ -43,7 +43,9 @@ Page({
     const currentPage = event.detail.current
     this.setData({ currentPage })
   },
+
   handleSliderChange(event) {
+    playerStore.offStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentTimeMusicListener)
     // 获取slider变化的值
     const value = event.detail.value
     // 计算currentTime值
@@ -51,21 +53,28 @@ Page({
     // 设置时间
     // audioContext.pause()
     audioContext.seek(currentTime)
-    this.setData({ currentTime: currentTime * 1000, isSliderChanging: false })
+    this.setData({ currentTime: currentTime * 1000, isSliderChanging: false, sliderValue: value })
+    console.log("点击", this.data.sliderValue);
+    setTimeout(() => {
+      playerStore.onStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentTimeMusicListener)
+    }, 1000)
   },
+
   handleSliderChanging(event) {
     const value = event.detail.value
     const currentTime = value / 100 * this.data.durationTime
     this.setData({ currentTime, isSliderChanging: true })
+    console.log("111");
   },
+
   handlieBackBtnClick() {
     wx.navigateBack()
   },
+
   handleModeBtnClick() {
     let playModeIndex = this.data.playModeIndex + 1
     if (playModeIndex == 3) playModeIndex = 0
     this.setData({ playModeIndex })
-
     // 设置playerStore中的playModeIndex
     playerStore.setState("playModeIndex", playModeIndex)
   },
@@ -79,39 +88,37 @@ Page({
     playerStore.dispatch("changeNewMusicAction")
   },
   // ============================= 数据监听 =======================
+  handleCurrentSongMusicListener({
+    currentSong,
+    durationTime,
+    lyricInfos
+  }) {
+    if (currentSong) this.setData({ currentSong })
+    if (durationTime) this.setData({ durationTime })
+    if (lyricInfos) this.setData({ lyricInfos })
+  },
+  handleCurrentTimeMusicListener({
+    currentTime, currentLyricIndex, currentLyricText
+  }) {
+    // 时间变化
+    if (currentTime && !this.data.isSliderChanging) {
+      const sliderValue = currentTime / this.data.durationTime * 100
+      this.setData({ currentTime, sliderValue })
+      console.log(sliderValue);
+    }
+    // 歌词变化
+    if (currentLyricIndex) {
+      this.setData({ currentLyricIndex, lyricScrollTop: (currentLyricIndex + 1) * 35 })
+    }
+    if (currentLyricText) {
+      this.setData({ currentLyricText })
+    }
+  },
   setupPlayerStoreListener() {
     // 1.监听currentSong/durationTime/lyricInfos
-    playerStore.onStates(["currentSong", "durationTime", "lyricInfos"], ({
-      currentSong,
-      durationTime,
-      lyricInfos
-    }) => {
-      if (currentSong) this.setData({ currentSong })
-      if (durationTime) this.setData({ durationTime })
-      if (lyricInfos) this.setData({ lyricInfos })
-    })
+    playerStore.onStates(["currentSong", "durationTime", "lyricInfos"], this.handleCurrentSongMusicListener)
     // 2.监听currentTime/currentLyricIndex/currentLyricText
-    playerStore.onStates(["currentTime", "currentLyricIndex", "currentLyricText"], ({
-      currentTime, currentLyricIndex, currentLyricText
-    }) => {
-      // 时间变化
-      if (currentTime && !this.data.isSliderChanging) {
-        // 判断返回数据与设置数据是否相近相近，currentTime == 0切换歌曲时
-        // if (Math.abs(currentTime - this.data.currentTime) < 2000 || currentTime == 0) {
-        //   const sliderValue = currentTime / this.data.durationTime * 100
-        //   this.setData({ currentTime, sliderValue })
-        // }
-        const sliderValue = currentTime / this.data.durationTime * 100
-        this.setData({ currentTime, sliderValue })
-      }
-      // 歌词变化
-      if (currentLyricIndex) {
-        this.setData({ currentLyricIndex, lyricScrollTop: (currentLyricIndex + 1) * 35 })
-      }
-      if (currentLyricText) {
-        this.setData({ currentLyricText })
-      }
-    })
+    playerStore.onStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentTimeMusicListener)
     // 3.监听播放模式相关的数据
     playerStore.onStates(["isPlaying", "playModeIndex", "playSongList", "playSongIndex"], ({ isPlaying, playModeIndex, playSongList, playSongIndex }) => {
       if (playModeIndex !== undefined) {
@@ -129,6 +136,6 @@ Page({
     })
   },
   onUnload() {
-
+    playerStore.offStates(["currentSong", "durationTime", "lyricInfos"], this.handleCurrentSongMusicListener)
   }
 })
